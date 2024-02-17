@@ -29,4 +29,38 @@ const iconSidebar = [
   },
 ];
 
-export default iconSidebar;
+
+
+
+const TeamSidebar = [
+  {
+    id : 1,
+    title : "Create Team",
+  }, 
+  {
+    id : 2, 
+    title : "Join Team",
+  },
+  {
+    id : 3, 
+    title : "Team List",
+  },
+  {
+    id : 4, 
+    title : "Team Details",
+  },
+  {
+    id : 5, 
+    title : "Team Members",
+  },
+  {
+    id : 6, 
+    title : "Team Chat",
+  },
+  {
+    id : 7, 
+    title : "Team Tasks",
+  },
+];
+
+export {iconSidebar, TeamSidebar};

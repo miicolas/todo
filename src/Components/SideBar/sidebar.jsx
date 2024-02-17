@@ -1,12 +1,31 @@
 import { useState } from "react";
-import iconSidebar from "../../lib/data";
+import { TeamSidebar, iconSidebar } from "../../lib/data";
 
 function SideBar() {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(0); // select est le state et setSelected est la fonction qui permet de modifier le state
 
   function updateToggleSelected(selected) {
     setSelected(selected);
   }
+
+  const [projectSelected, setProjectSelected] = useState("");
+
+  function updateProjectSelected(project) {
+    // Vérifier si le menu est déjà sélectionné
+    console.log(project);
+    const isSelected = projectSelected.includes(project);
+    console.log(isSelected);
+    if (isSelected) {
+      // Si déjà sélectionné, le retirer du tableau
+      setProjectSelected(projectSelected.filter(item => item !== project));
+      console.log(projectSelected);
+    } else {
+      // Sinon, l'ajouter au tableau
+      setProjectSelected([...projectSelected, project]);
+      console.log(projectSelected);
+    }
+  }
+
 
   return (
     <div className=" h-screen flex">
@@ -78,8 +97,8 @@ function SideBar() {
         </div>
       </div>
       <div className="w-80 h-full bg-white py-8 px-7 border-r border-[#1C1D22] rounded-r-sm">
-        <div className="flex gap-32 items-center w-fit">
-          <h1 className="text-3xl font-bold text-[#1C1D22]">Projects️</h1>
+        <div className="flex justify-between items-center w-full">
+          <h1 className="text-3xl font-bold text-[#1C1D22]">Projects</h1>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="28"
@@ -98,11 +117,113 @@ function SideBar() {
               <path
                 d="M14 18L14 10"
                 stroke="#1C1D22"
-                stroke-width="2"
-                stroke-linecap="round"
+                strokeWidth="2"
+                strokeLinecap="round"
               />
             </g>
           </svg>
+        </div>
+        <div className="mt-8 flex flex-col gap-7">
+          <div className="">
+            <div className="flex items-center w-full justify-between">
+              <h3 className="text-lg font-bold text-[#1C1D22]/50">Team</h3>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="6"
+                height="10"
+                viewBox="0 0 6 10"
+                fill="none"
+                className="cursor-pointer"
+                onClick={() => updateProjectSelected("team")}
+              >
+                <path
+                  d="M1 1L5 5L1 9"
+                  stroke="#1C1D22"
+                  strokeOpacity="0.5"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+            <div
+              className={`${projectSelected.includes("team") ? "block" : "hidden"}`}
+            >
+              <ul>
+                {TeamSidebar.map((team) => (
+                  <li key={TeamSidebar.id}>{team.title}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="">
+              <div className="flex items-center w-full justify-between">
+                <h3 className="text-lg font-bold text-[#1C1D22]/50">Team</h3>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="6"
+                  height="10"
+                  viewBox="0 0 6 10"
+                  fill="none"
+                  className="cursor-pointer"
+                  onClick={() => updateProjectSelected("projects")}
+                >
+                  <path
+                    d="M1 1L5 5L1 9"
+                    stroke="#1C1D22"
+                    strokeOpacity="0.5"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className={`${
+                  projectSelected.includes("projects") ? "block" : "hidden"
+                }`}
+              >
+                <ul>
+                  {TeamSidebar.map((team) => (
+                    <li key={TeamSidebar.id}>{team.title}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <div className="">
+              <div className="flex items-center w-full justify-between">
+                <h3 className="text-lg font-bold text-[#1C1D22]/50">Team</h3>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="6"
+                  height="10"
+                  viewBox="0 0 6 10"
+                  fill="none"
+                  className="cursor-pointer"
+                  onClick={() => updateProjectSelected("tasks")}
+                >
+                  <path
+                    d="M1 1L5 5L1 9"
+                    stroke="#1C1D22"
+                    strokeOpacity="0.5"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+              <div
+                className={`${
+                  projectSelected.includes("tasks") ? "block" : "hidden"
+                }`}
+              >
+                <ul>
+                  {TeamSidebar.map((team) => (
+                    <li key={TeamSidebar.id}>{team.title}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
