@@ -6,26 +6,26 @@ function SideBar() {
 
   function updateToggleSelected(selected) {
     setSelected(selected);
+    console.log(selected);
   }
 
-  const [projectSelected, setProjectSelected] = useState("");
+  const [projectSelected, setProjectSelected] = useState([]);
 
   function updateProjectSelected(project) {
-    // Vérifier si le menu est déjà sélectionné
-    console.log(project);
+    // Vérifier si le projet est déjà sélectionné
     const isSelected = projectSelected.includes(project);
-    console.log(isSelected);
+
     if (isSelected) {
       // Si déjà sélectionné, le retirer du tableau
-      setProjectSelected(projectSelected.filter(item => item !== project));
-      console.log(projectSelected);
+      const updatedProjects = projectSelected.filter(
+        (item) => item !== project
+      );
+      setProjectSelected(updatedProjects);
     } else {
       // Sinon, l'ajouter au tableau
-      setProjectSelected([...projectSelected, project]);
-      console.log(projectSelected);
+      setProjectSelected((prevSelected) => [...prevSelected, project]);
     }
   }
-
 
   return (
     <div className=" h-screen flex">
@@ -97,80 +97,68 @@ function SideBar() {
         </div>
       </div>
       <div className="w-80 h-full bg-white py-8 px-7 border-r border-[#1C1D22] rounded-r-sm">
-        <div className="flex justify-between items-center w-full">
-          <h1 className="text-3xl font-bold text-[#1C1D22]">Projects</h1>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="28"
-            height="28"
-            viewBox="0 0 28 28"
-            fill="none"
-          >
-            <circle cx="14" cy="14" r="14" fill="#1C1D22" fill-opacity="0.08" />
-            <g opacity="0.4">
-              <path
-                d="M18 14L10 14"
-                stroke="#1C1D22"
-                stroke-width="2"
-                stroke-linecap="round"
+        <div id="dashboard" className={`${selected !== 0 ? "hidden" : "block" }`}>
+          <div className="flex justify-between items-center w-full">
+            <h1 className="text-3xl font-bold text-[#1C1D22]">Projects</h1>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              fill="none"
+            >
+              <circle
+                cx="14"
+                cy="14"
+                r="14"
+                fill="#1C1D22"
+                fill-opacity="0.08"
               />
-              <path
-                d="M14 18L14 10"
-                stroke="#1C1D22"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </g>
-          </svg>
-        </div>
-        <div className="mt-8 flex flex-col gap-7">
-          <div className="">
-            <div className="flex items-center w-full justify-between">
-              <h3 className="text-lg font-bold text-[#1C1D22]/50">Team</h3>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="6"
-                height="10"
-                viewBox="0 0 6 10"
-                fill="none"
-                className="cursor-pointer"
-                onClick={() => updateProjectSelected("team")}
-              >
+              <g opacity="0.4">
                 <path
-                  d="M1 1L5 5L1 9"
+                  d="M18 14L10 14"
                   stroke="#1C1D22"
-                  strokeOpacity="0.5"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M14 18L14 10"
+                  stroke="#1C1D22"
                   strokeWidth="2"
                   strokeLinecap="round"
-                  strokeLinejoin="round"
                 />
-              </svg>
-            </div>
-            <div
-              className={`${projectSelected.includes("team") ? "block" : "hidden"}`}
-            >
-              <ul>
-                {TeamSidebar.map((team) => (
-                  <li key={TeamSidebar.id}>{team.title}</li>
-                ))}
-              </ul>
-            </div>
+              </g>
+            </svg>
+          </div>
+          <div className="mt-8 flex flex-col gap-7">
             <div className="">
               <div className="flex items-center w-full justify-between">
-                <h3 className="text-lg font-bold text-[#1C1D22]/50">Team</h3>
+                <h3
+                  className={`text-lg font-bold /50  transition-all  ease-in-out duration-300 ${
+                    projectSelected.includes("team")
+                      ? "text-[#1C1D22]"
+                      : "text-[#1C1D22]/50"
+                  }`}
+                >
+                  Team
+                </h3>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="6"
                   height="10"
                   viewBox="0 0 6 10"
                   fill="none"
-                  className="cursor-pointer"
-                  onClick={() => updateProjectSelected("projects")}
+                  className={`cursor-pointer transition ease-in-out duration-300 ${
+                    projectSelected.includes("team") ? "rotate-90" : ""
+                  }`}
+                  onClick={() => updateProjectSelected("team")}
                 >
                   <path
                     d="M1 1L5 5L1 9"
                     stroke="#1C1D22"
-                    strokeOpacity="0.5"
+                    strokeOpacity={`${
+                      projectSelected.includes("team") ? "1" : "0.5"
+                    }`}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -178,8 +166,8 @@ function SideBar() {
                 </svg>
               </div>
               <div
-                className={`${
-                  projectSelected.includes("projects") ? "block" : "hidden"
+                className={`transition-all duration-700 ease-out ${
+                  projectSelected.includes("team") ? "block" : "hidden"
                 }`}
               >
                 <ul>
@@ -191,20 +179,32 @@ function SideBar() {
             </div>
             <div className="">
               <div className="flex items-center w-full justify-between">
-                <h3 className="text-lg font-bold text-[#1C1D22]/50">Team</h3>
+                <h3
+                  className={`text-lg font-bold /50  transition-all  ease-in-out duration-300 ${
+                    projectSelected.includes("projects")
+                      ? "text-[#1C1D22]"
+                      : "text-[#1C1D22]/50"
+                  }`}
+                >
+                  Projects
+                </h3>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="6"
                   height="10"
                   viewBox="0 0 6 10"
                   fill="none"
-                  className="cursor-pointer"
-                  onClick={() => updateProjectSelected("tasks")}
+                  className={`cursor-pointer transition ease-in-out duration-300 ${
+                    projectSelected.includes("projects") ? "rotate-90" : ""
+                  }`}
+                  onClick={() => updateProjectSelected("projects")}
                 >
                   <path
                     d="M1 1L5 5L1 9"
                     stroke="#1C1D22"
-                    strokeOpacity="0.5"
+                    strokeOpacity={`${
+                      projectSelected.includes("projects") ? "1" : "0.5"
+                    }`}
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -212,8 +212,8 @@ function SideBar() {
                 </svg>
               </div>
               <div
-                className={`${
-                  projectSelected.includes("tasks") ? "block" : "hidden"
+                className={`transition-all duration-700 ease-out ${
+                  projectSelected.includes("projects") ? "block" : "hidden"
                 }`}
               >
                 <ul>
@@ -225,7 +225,14 @@ function SideBar() {
             </div>
           </div>
         </div>
+        <div id="profile" className={`${selected !== 1 ? "hidden" : "block" }`}>
+        
+          <h1 className="text-3xl font-bold text-[#1C1D22]">Profile</h1>
+       
       </div>
+      </div>
+      
+      
     </div>
   );
 }

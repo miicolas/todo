@@ -63,4 +63,23 @@ const TeamSidebar = [
   },
 ];
 
-export {iconSidebar, TeamSidebar};
+const ProjectsSidebar = [
+  {
+    id : 1,
+    title : "All projects",
+  },
+  {
+    id : 2, 
+    title : "Design system",
+  }, 
+  {
+    id: 3,
+    title : "User Flow",
+  }, 
+  {
+    id : 4,
+    title : "Ux Research",
+  }
+]
+
+export {iconSidebar, TeamSidebar, ProjectsSidebar};
